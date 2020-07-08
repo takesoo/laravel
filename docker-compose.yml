@@ -13,8 +13,8 @@ services:
     ports:
     - 80:80
     volumes:
-    - ./server:/var/www
-    - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+    - ./server:/var/www/
+    - ./docker/nginx/:/etc/nginx/conf.d/
     depends_on:
     - php
 
@@ -34,3 +34,17 @@ services:
     - ./docker/db/sql:/docker-entrypoint-initdb.d
     ports:
     - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin  #Dockerfileからbuildしない場合はイメージ名を明記
+    environment:
+      - PMA_ARBITRARY=1  #任意のサーバーで起動
+      - PMA_HOST=db-host
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    links:
+      - db  #mysqlコンテナにリンクする
+    ports:
+        - 8080:80  #localhost:8080とphpmyadminコンテナの80番ポートをつなげる
+    volumes:
+        - /sessions  
