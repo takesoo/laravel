@@ -7,7 +7,7 @@ default.conf => アプリ名.conf
 ```
 server {
   listen 80;
-    root /var/www/html/アプリ名/public;
+    root /var/www/アプリ名/public;
     index index.php index.html;
 ```
 
